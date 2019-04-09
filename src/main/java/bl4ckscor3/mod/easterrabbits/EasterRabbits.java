@@ -8,12 +8,12 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
-@Mod(modid="easterrabbits", name="Easter Rabbits", version="1.0")
+@Mod("easterrabbits")
 @EventBusSubscriber
 public class EasterRabbits
 {
@@ -51,7 +51,7 @@ public class EasterRabbits
 			if(!rabbit.isChild() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0)
 			{
 				rabbit.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
-				rabbit.dropItem(Items.EGG, 1);
+				rabbit.entityDropItem(Items.EGG, 1);
 				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
 			}
 		}

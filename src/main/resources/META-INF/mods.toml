@@ -1,0 +1,25 @@
+modLoader="javafml" #mandatory
+loaderVersion="[25,)" #mandatory
+issueTrackerURL="https://github.com/bl4ckscor3/EasterRabbits/issues"
+displayURL="http://minecraft.curseforge.com/projects/easter-rabbits"
+authors="bl4ckscor3"
+
+[[mods]] #mandatory
+modId="easterrabbits" #mandatory
+version="v1.0" #mandatory
+displayName="Easter Rabbits" #mandatory
+description='''Makes rabbits lay eggs every now and then.''' #mandatory
+
+[[dependencies.easterrabbits]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.easterrabbits]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"
