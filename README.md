@@ -1,2 +1,2 @@
 # EasterRabbits
-https://minecraft.curseforge.com/projects/easter-rabbits
+https://www.curseforge.com/minecraft/mc-mods/easter-rabbits
