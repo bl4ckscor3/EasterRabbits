@@ -1,6 +1,8 @@
 /bin
 /build
-/.project
-/.classpath
 /.gradle
 /.settings
+/run
+*.launch
+.project
+.classpath
