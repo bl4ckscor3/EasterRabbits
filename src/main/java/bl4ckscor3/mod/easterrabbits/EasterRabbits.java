@@ -48,10 +48,10 @@ public class EasterRabbits
 		{
 			TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
 
-			if(!rabbit.isChild() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0)
+			if(!rabbit.isBaby() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0)
 			{
-				rabbit.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
-				rabbit.entityDropItem(Items.EGG, 1);
+				rabbit.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
+				rabbit.spawnAtLocation(Items.EGG, 1);
 				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
 			}
 		}
