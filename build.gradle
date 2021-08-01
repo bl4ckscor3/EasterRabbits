@@ -1,28 +1,29 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.16.2-v1.0.1'
+version = '1.0.1'
 group = 'bl4ckscor3.mod.easterrabbits'
-archivesBaseName = 'easterrabbits'
+archivesBaseName = 'easterrabbits-1.17.1'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'official', version: '1.17.1'
 	
     runs {
         client {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run/client')
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -33,8 +34,9 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run')
+            workingDirectory project.file('run/server')
             property 'forge.logging.console.level', 'debug'
+			args '-nogui'
 
             mods {
                 easterrabbits {
@@ -47,16 +49,16 @@ minecraft {
 
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.2-33.0.0'
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.18'
 }
 
 jar {
     manifest {
         attributes(["Specification-Title": "Easter Rabbits",
                     "Specification-Vendor": "bl4ckscor3",
-                    "Specification-Version": "v1.0.1",
+                    "Specification-Version": "${version}",
                     "Implementation-Title": "Easter Rabbits",
-                    "Implementation-Version": "v1.0.1",
+                    "Implementation-Version": "${version}",
                     "Implementation-Vendor" :"bl4ckscor3",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }

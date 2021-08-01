@@ -1,26 +1,26 @@
-modLoader="javafml" #mandatory
-loaderVersion="[33,)" #mandatory
-license="GNU GPL v3.0 https://github.com/bl4ckscor3/EasterRabbits/blob/1.16/LICENSE"
+modLoader="javafml"
+loaderVersion="[37,)"
+license="GNU GPL v3.0 https://github.com/bl4ckscor3/EasterRabbits/blob/1.17/LICENSE"
 issueTrackerURL="https://github.com/bl4ckscor3/EasterRabbits/issues"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/easter-rabbits"
-authors="bl4ckscor3"
 
-[[mods]] #mandatory
-modId="easterrabbits" #mandatory
-version="v1.0.1" #mandatory
-displayName="Easter Rabbits" #mandatory
-description='''Makes rabbits lay eggs every now and then.''' #mandatory
+[[mods]]
+	modId="easterrabbits"
+	version="${file.jarVersion}"
+	displayName="Easter Rabbits"
+	description='''Makes rabbits lay eggs every now and then.'''
+	displayURL="https://www.curseforge.com/minecraft/mc-mods/easter-rabbits"
+	authors="bl4ckscor3"
 
 [[dependencies.easterrabbits]]
     modId="forge"
     mandatory=true
-    versionRange="[33,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.easterrabbits]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,1.17)"
+    versionRange="[1.17,1.18)"
     ordering="NONE"
     side="BOTH"
