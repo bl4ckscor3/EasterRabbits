@@ -10,7 +10,6 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -25,12 +24,6 @@ public class EasterRabbits
 
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event)
-	{
-		tryAddRabbit(event.getEntity());
-	}
-
-	@SubscribeEvent
-	public static void onLivingSpawn(LivingSpawnEvent event)
 	{
 		tryAddRabbit(event.getEntity());
 	}
