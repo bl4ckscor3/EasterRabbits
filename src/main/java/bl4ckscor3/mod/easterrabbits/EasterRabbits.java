@@ -8,7 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -23,7 +23,7 @@ public class EasterRabbits
 	private static final int FREQUENCY = 6000;
 
 	@SubscribeEvent
-	public static void onEntityJoinWorld(EntityJoinWorldEvent event)
+	public static void onEntityJoinWorld(EntityJoinLevelEvent event)
 	{
 		tryAddRabbit(event.getEntity());
 	}
