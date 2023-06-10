@@ -29,7 +29,7 @@ public class EasterRabbits {
 	private static void tryAddRabbit(Entity entity) {
 		if (entity instanceof Rabbit rabbit) {
 			if (!TIME_UNTIL_NEXT_EGG.containsKey(rabbit)) {
-				TIME_UNTIL_NEXT_EGG.put(rabbit, 100);
+				TIME_UNTIL_NEXT_EGG.put(rabbit, FREQUENCY);
 				return;
 			}
 		}
