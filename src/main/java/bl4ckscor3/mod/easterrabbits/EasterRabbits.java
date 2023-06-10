@@ -16,46 +16,37 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @Mod("easterrabbits")
 @EventBusSubscriber
-public class EasterRabbits
-{
-	public static final HashMap<Rabbit,Integer> TIME_UNTIL_NEXT_EGG = new HashMap<>();
+public class EasterRabbits {
+	public static final HashMap<Rabbit, Integer> TIME_UNTIL_NEXT_EGG = new HashMap<>();
 	public static final Random RAND = new Random();
 	private static final int FREQUENCY = 6000;
 
 	@SubscribeEvent
-	public static void onEntityJoinWorld(EntityJoinLevelEvent event)
-	{
+	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
 		tryAddRabbit(event.getEntity());
 	}
 
-	private static void tryAddRabbit(Entity entity)
-	{
-		if(entity instanceof Rabbit rabbit)
-		{
-			if(!TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
-			{
-				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
+	private static void tryAddRabbit(Entity entity) {
+		if (entity instanceof Rabbit rabbit) {
+			if (!TIME_UNTIL_NEXT_EGG.containsKey(rabbit)) {
+				TIME_UNTIL_NEXT_EGG.put(rabbit, 100);
 				return;
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void onLivingDeath(LivingDeathEvent event)
-	{
-		if(event.getEntity() instanceof Rabbit rabbit)
+	public static void onLivingDeath(LivingDeathEvent event) {
+		if (event.getEntity() instanceof Rabbit rabbit)
 			TIME_UNTIL_NEXT_EGG.remove(rabbit);
 	}
 
 	@SubscribeEvent
-	public static void onServerTick(ServerTickEvent event)
-	{
-		for(Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet())
-		{
+	public static void onServerTick(ServerTickEvent event) {
+		for (Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet()) {
 			TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
 
-			if(!rabbit.isBaby() && rabbit.isAlive() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0)
-			{
+			if (!rabbit.isBaby() && rabbit.isAlive() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0) {
 				rabbit.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
 				rabbit.spawnAtLocation(Items.EGG, 1);
 				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
