@@ -1,23 +1,24 @@
 package bl4ckscor3.mod.easterrabbits;
 
-import java.util.HashMap;
-import java.util.Random;
-
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.event.TickEvent.ServerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.neoforge.event.TickEvent.ServerTickEvent;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 @Mod("easterrabbits")
 @EventBusSubscriber
 public class EasterRabbits {
-	public static final HashMap<Rabbit, Integer> TIME_UNTIL_NEXT_EGG = new HashMap<>();
+	public static final Map<Rabbit, Integer> TIME_UNTIL_NEXT_EGG = new HashMap<>();
 	public static final Random RAND = new Random();
 	private static final int FREQUENCY = 6000;
 
@@ -27,12 +28,8 @@ public class EasterRabbits {
 	}
 
 	private static void tryAddRabbit(Entity entity) {
-		if (entity instanceof Rabbit rabbit) {
-			if (!TIME_UNTIL_NEXT_EGG.containsKey(rabbit)) {
-				TIME_UNTIL_NEXT_EGG.put(rabbit, FREQUENCY);
-				return;
-			}
-		}
+		if (entity instanceof Rabbit rabbit && !TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
+			TIME_UNTIL_NEXT_EGG.put(rabbit, FREQUENCY);
 	}
 
 	@SubscribeEvent
