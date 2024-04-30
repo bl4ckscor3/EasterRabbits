@@ -1,19 +1,18 @@
 package bl4ckscor3.mod.easterrabbits;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.item.Items;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.neoforge.event.TickEvent.ServerTickEvent;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.item.Items;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
 @Mod("easterrabbits")
 @EventBusSubscriber
@@ -24,11 +23,7 @@ public class EasterRabbits {
 
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
-		tryAddRabbit(event.getEntity());
-	}
-
-	private static void tryAddRabbit(Entity entity) {
-		if (entity instanceof Rabbit rabbit && !TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
+		if (event.getEntity() instanceof Rabbit rabbit && !TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
 			TIME_UNTIL_NEXT_EGG.put(rabbit, FREQUENCY);
 	}
 
@@ -39,7 +34,7 @@ public class EasterRabbits {
 	}
 
 	@SubscribeEvent
-	public static void onServerTick(ServerTickEvent event) {
+	public static void onServerTick(ServerTickEvent.Pre event) {
 		for (Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet()) {
 			TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
 
