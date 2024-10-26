@@ -9,7 +9,7 @@ version = '1.0.2'
 group = 'bl4ckscor3.mod.easterrabbits'
 
 base {
-	archivesName = 'easterrabbits-1.21'
+	archivesName = 'easterrabbits-1.21.3'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -27,12 +27,12 @@ runs {
 
     server {
         workingDirectory project.file('run/server')
-		programArgument '-nogui'
+		argument '-nogui'
     }
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:21.0.2-beta'
+	implementation 'net.neoforged:neoforge:21.3.3-beta'
 }
 
 tasks.named('jar', Jar).configure {
