@@ -1,4 +1,4 @@
-license="MIT https://github.com/bl4ckscor3/EasterRabbits/blob/1.21.3/LICENSE"
+license="MIT https://github.com/bl4ckscor3/EasterRabbits/blob/1.21.10/LICENSE"
 issueTrackerURL="https://github.com/bl4ckscor3/EasterRabbits/issues"
 
 [[mods]]
@@ -12,13 +12,13 @@ issueTrackerURL="https://github.com/bl4ckscor3/EasterRabbits/issues"
 [[dependencies.easterrabbits]]
     modId="neoforge"
     type="required"
-    versionRange="[21.3,)"
+    versionRange="[21.10,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.easterrabbits]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.3,1.22)"
+    versionRange="[1.21.10,1.22)"
     ordering="NONE"
     side="BOTH"

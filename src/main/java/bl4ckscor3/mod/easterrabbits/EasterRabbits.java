@@ -41,7 +41,7 @@ public class EasterRabbits {
 
 			if (!rabbit.isBaby() && rabbit.isAlive() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0) {
 				rabbit.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
-				rabbit.spawnAtLocation((ServerLevel) rabbit.level(), Items.EGG, 1);
+				rabbit.spawnAtLocation((ServerLevel) rabbit.level(), Items.EGG);
 				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
 			}
 		}
