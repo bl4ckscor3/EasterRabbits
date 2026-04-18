@@ -2,21 +2,21 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'idea'
-	id 'net.neoforged.moddev' version '2.0.123'
+	id 'net.neoforged.moddev' version '2.0.141'
 }
 
 version = '1.0.2'
 group = 'bl4ckscor3.mod.easterrabbits'
 
 base {
-	archivesName = 'easterrabbits-1.21.11'
+	archivesName = 'easterrabbits-26.1.2'
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 neoForge {
-	version = "21.11.0-beta"
+	version = "26.1.2.15-beta"
 
 	runs {
 		configureEach {
@@ -55,7 +55,7 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-	options.release = 21
+	options.release = 25
 }
 
 idea {
