@@ -1,66 +1,81 @@
 plugins {
-	id 'java-library'
-	id 'eclipse'
-	id 'idea'
-	id 'net.neoforged.moddev' version '2.0.141'
+    id 'idea'
 }
 
-version = '1.0.2'
-group = 'bl4ckscor3.mod.easterrabbits'
+subprojects {
+    apply plugin: 'java'
 
-base {
-	archivesName = 'easterrabbits-26.1.2'
-}
+    base {
+        archivesName = "${mod_id}-${project.path.substring(1)}-${minecraft_version}"
+    }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+    java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 
-neoForge {
-	version = "26.1.2.15-beta"
+    jar {
+        destinationDirectory = file("../build/libs")
 
-	runs {
-		configureEach {
-			logLevel = org.slf4j.event.Level.DEBUG
-			gameDirectory = project.file("run/" + name)
-			ideName = "EasterRabbits " + ideName.get()
-		}
+        from(rootProject.file("LICENSE")) {
+            rename { "${it}_${mod_name}" }
+        }
 
-		client {
-			client()
-		}
+        manifest {
+            attributes([
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Built-On-Minecraft'      : minecraft_version
+            ])
+        }
+    }
 
-		server {
-			server()
-			programArgument('-nogui')
-		}
-	}
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.getRelease().set(java_version.toInteger())
+    }
 
-	mods {
-		easterrabbits {
-			sourceSet(sourceSets.main)
-		}
-	}
-}
+    tasks.withType(AbstractTestTask).configureEach {
+        failOnNoDiscoveredTests = false
+    }
 
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes(["Specification-Title": "Easter Rabbits",
-                    "Specification-Vendor": "bl4ckscor3",
-                    "Specification-Version": "${version}",
-                    "Implementation-Title": "Easter Rabbits",
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor": "bl4ckscor3"])
+    processResources {
+        var expandProps = [
+                'version'                   : version,
+                'minecraft_version'         : minecraft_version,
+                'minecraft_min_version'     : minecraft_min_version,
+                'java_version'              : java_version,
+                'license'                   : license,
+                'mod_id'                    : mod_id,
+                'mod_name'                  : mod_name,
+                'description'               : project.description,
+                'mod_author'                : mod_author,
+                'neoforge_version'          : neoforge_version,
+                'neoforge_min_version'      : neoforge_min_version,
+                'source_link'               : source_link,
+                'cf_link'                   : cf_link
+        ]
+        var jsonExpandProps = expandProps.collectEntries {
+            key, value -> [(key): value instanceof String ? value.replace("\n", "\\\\n") : value]
+        }
+
+        filesMatching(['META-INF/neoforge.mods.toml']) {
+            expand expandProps
+        }
+
+        filesMatching(['fabric.mod.json']) {
+            expand jsonExpandProps
+        }
+
+        inputs.properties(expandProps)
+        exclude ".cache"
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-	options.release = 25
-}
-
 idea {
-	module {
-		downloadSources = true
-		downloadJavadoc = true
-	}
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

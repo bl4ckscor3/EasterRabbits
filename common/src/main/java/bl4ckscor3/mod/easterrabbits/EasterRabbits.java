@@ -6,36 +6,27 @@ import java.util.Random;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.item.Items;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-@Mod("easterrabbits")
-@EventBusSubscriber
 public class EasterRabbits {
+	public static final String MODID = "easterrabbits";
 	public static final Map<Rabbit, Integer> TIME_UNTIL_NEXT_EGG = new HashMap<>();
 	public static final Random RAND = new Random();
 	private static final int FREQUENCY = 6000;
 
-	@SubscribeEvent
-	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
-		if (event.getEntity() instanceof Rabbit rabbit && !TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
+	public static void onEntityJoinWorld(Entity entity) {
+		if (entity instanceof Rabbit rabbit && !TIME_UNTIL_NEXT_EGG.containsKey(rabbit))
 			TIME_UNTIL_NEXT_EGG.put(rabbit, FREQUENCY);
 	}
 
-	@SubscribeEvent
-	public static void onLivingDeath(LivingDeathEvent event) {
-		if (event.getEntity() instanceof Rabbit rabbit)
+	public static void onLivingDeath(Entity entity) {
+		if (entity instanceof Rabbit rabbit)
 			TIME_UNTIL_NEXT_EGG.remove(rabbit);
 	}
 
-	@SubscribeEvent
-	public static void onServerTick(ServerTickEvent.Pre event) {
+	public static void onServerTick() {
 		for (Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet()) {
 			TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
 
