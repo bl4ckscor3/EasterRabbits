@@ -22,6 +22,6 @@ public class NeoEntrypoint {
 
 	@SubscribeEvent
 	public static void onServerTick(ServerTickEvent.Pre event) {
-		EasterRabbits.onServerTick();
+		EasterRabbits.onServerTick(event.getServer());
 	}
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.ServerTickRateManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -26,14 +28,18 @@ public class EasterRabbits {
 			TIME_UNTIL_NEXT_EGG.remove(rabbit);
 	}
 
-	public static void onServerTick() {
-		for (Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet()) {
-			TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
+	public static void onServerTick(MinecraftServer server) {
+		ServerTickRateManager tickRateManager = server.tickRateManager();
 
-			if (!rabbit.isBaby() && rabbit.isAlive() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0) {
-				rabbit.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
-				rabbit.spawnAtLocation((ServerLevel) rabbit.level(), Items.EGG);
-				TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
+		if (!tickRateManager.isFrozen() || tickRateManager.isSteppingForward()) {
+			for (Rabbit rabbit : TIME_UNTIL_NEXT_EGG.keySet()) {
+				TIME_UNTIL_NEXT_EGG.put(rabbit, TIME_UNTIL_NEXT_EGG.get(rabbit) - 1);
+
+				if (!rabbit.isBaby() && rabbit.isAlive() && TIME_UNTIL_NEXT_EGG.get(rabbit) <= 0) {
+					rabbit.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
+					rabbit.spawnAtLocation((ServerLevel) rabbit.level(), Items.EGG);
+					TIME_UNTIL_NEXT_EGG.put(rabbit, RAND.nextInt(FREQUENCY) + FREQUENCY);
+				}
 			}
 		}
 	}

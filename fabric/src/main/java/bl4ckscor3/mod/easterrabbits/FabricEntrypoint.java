@@ -10,6 +10,6 @@ public class FabricEntrypoint implements ModInitializer {
 	public void onInitialize() {
 		ServerEntityEvents.ENTITY_LOAD.register((entity, _) -> EasterRabbits.onEntityJoinWorld(entity));
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, _) -> EasterRabbits.onLivingDeath(entity));
-		ServerTickEvents.START_SERVER_TICK.register(_ -> EasterRabbits.onServerTick());
+		ServerTickEvents.START_SERVER_TICK.register(EasterRabbits::onServerTick);
 	}
 }
